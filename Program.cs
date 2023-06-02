@@ -11,98 +11,33 @@ namespace Blog
         static void Main(string[] args)
         {
             using var context = new BlogDataContext();
-            var post = context
-                .Posts
-                //.AsNoTracking()
-                .Include(p => p.Author)
-                .Include(p => p.Category)
-                .OrderByDescending(x => x.LastUpdateDate)
-                .FirstOrDefault();
-            
-            post.Author.Name = "Teste";
-            context.Posts.Update(post);
-            context.SaveChanges();
 
-            /*
-            var posts = context
-                .Posts
-                .AsNoTracking()
-                .Include(p => p.Author)
-                .Include(p => p.Category)
-                    //.ThenInclude(p => p.) // SUBSELECT
-                .OrderByDescending(x => x.LastUpdateDate)
-                .ToList();
+            // context.Users.Add(new User {
+            //     Bio = "Backend Developer",
+            //     Email = "lucas@lopes.io",
+            //     Image = "https://lopes.io",
+            //     Name = "Lucas Lopes",
+            //     PasswordHash = "1234",
+            //     Slug = "lucas-lopes"
+            // });
+            // context.SaveChanges();
 
-            foreach(var post in posts)
-                Console.WriteLine($"{post.Title} escrito por {post.Author?.Name} em {post.Category?.Name}");
+            var user = context.Users.FirstOrDefault();
 
-            var user = new User{
-                Name = "Lucas Lopes",
-                Slug = "lucaslopes",
-                Email = "lucas@lopes.io",
-                Bio = "Fullstack",
-                Image = "https://lucas.io",
-                PasswordHash = "123098457"
-            };
-
-            var category = new Category {
-                Name = "Backend", Slug = "backend"
-            };
-
-            var post = new Post{
+            var post = new Post {
                 Author = user,
-                Category = category,
-                Body = "<p>Hello World</post>",
-                Slug = "comecando-com-ef-core",
-                Summary = "Neste artigo vamos aprender EF Core",
-                Title = "Começando com EF Core",
+                Body = "Meu Artigo",
+                Category = new Category{
+                    Name = "Backend",
+                    Slug = "backend"
+                },
                 CreateDate = DateTime.Now,
-                LastUpdateDate = DateTime.Now
+                Slug = "meu-artigo",
+                Summary = "Neste artigo vamos conferir...",
+                Title = "Meu Artigo"
             };
-
             context.Posts.Add(post);
             context.SaveChanges();
-            */
-
-            //using(var context = new BlogDataContext()){
-                // INSERT
-                //var tag = new Tag{Name = "ASP.NET", Slug = "aspnet"};
-                //context.Tags.Add(tag);
-                //context.SaveChanges();
-
-                // UPDATE
-                //var tag = context.Tags.FirstOrDefault(x => x.Id == 1);
-                //tag.Name = ".NET";
-                //tag.Slug = "dotnet";
-                //context.Update(tag);
-                //context.SaveChanges();
-
-                // DELETE
-                //var tag = context.Tags.FirstOrDefault(x => x.Id == 1);
-                //context.Remove(tag);
-                //context.SaveChanges();
-
-                //SELECT
-                // Não executou no banco => var tags = context.Tags;
-                // Executou no banco quando adicionado .ToList()
-                //var tags = context
-                //    .Tags
-                //    .AsNoTracking()
-                //    .ToList();
-
-                //foreach(var tag in tags){
-                //    System.Console.WriteLine(tag.Name);
-                //}
-
-
-                //var tag = context
-                //    .Tags
-                //    .AsNoTracking()
-                //    .FirstOrDefault(x => x.Id == 5);
-                //Console.WriteLine(tag?.Name);
-
-                
-            //}
         }
     }
 }
