@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Blog.Data;
 using Blog.Models;
 using Microsoft.EntityFrameworkCore;
@@ -11,33 +13,13 @@ namespace Blog
         static void Main(string[] args)
         {
             using var context = new BlogDataContext();
+            var posts = context.PostWithTagsCounts.ToList();
 
-            // context.Users.Add(new User {
-            //     Bio = "Backend Developer",
-            //     Email = "lucas@lopes.io",
-            //     Image = "https://lopes.io",
-            //     Name = "Lucas Lopes",
-            //     PasswordHash = "1234",
-            //     Slug = "lucas-lopes"
-            // });
-            // context.SaveChanges();
+            foreach(var item in posts){
+                
+            }
 
-            var user = context.Users.FirstOrDefault();
-
-            var post = new Post {
-                Author = user,
-                Body = "Meu Artigo",
-                Category = new Category{
-                    Name = "Backend",
-                    Slug = "backend"
-                },
-                CreateDate = DateTime.Now,
-                Slug = "meu-artigo",
-                Summary = "Neste artigo vamos conferir...",
-                Title = "Meu Artigo"
-            };
-            context.Posts.Add(post);
-            context.SaveChanges();
+            Console.WriteLine("Teste");
         }
     }
 }
